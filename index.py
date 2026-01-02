@@ -1,16 +1,7 @@
+from collections import Counter
 def func(nums):
-    x = len(nums)-1
-    i = 0
-    while True:
-        if nums[x] < 9:
-            if 0 in nums and len(set(nums)) == 1:
-                return [nums[x]+1]+[0]*i
-            return nums[:x]+[nums[x]+1]+[0]*i
-        nums[x] = 0
-        x -= 1
-        i += 1
+    d = Counter(nums)
+    n=max(d, key=d.get)
+    return n
 
-
-print(func([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]))
-print(func([5, 9, 9]))
-print(func([9, 9, 9, 9, 9]))
+print(func([1,2,3,3]))

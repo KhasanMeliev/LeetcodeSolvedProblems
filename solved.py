@@ -17,3 +17,13 @@
 # print(func([9, 8, 7, 6, 5, 4, 3, 2, 1, 0]))
 # print(func([5, 9, 9]))
 # print(func([9, 9, 9, 9, 9]))
+
+# ----------------------------------------------------------------
+# 961. N-Repeated Element in Size 2N Array
+# class Solution:
+#     def repeatedNTimes(self, nums: List[int]) -> int:
+#         d = {}
+#         for i in nums:
+#             if i in d:
+#                 return i
+#             d[i] = 1
