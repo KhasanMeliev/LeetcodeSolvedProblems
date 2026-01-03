@@ -27,3 +27,11 @@
 #             if i in d:
 #                 return i
 #             d[i] = 1
+
+
+#----------------------------
+# 3794. Reverse String Prefix
+
+# class Solution:
+#     def reversePrefix(self, s: str, k: int) -> str:
+#         return s[:k][::-1]+s[k:]
