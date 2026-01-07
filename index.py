@@ -9,47 +9,36 @@ class Node:
 
 
 def func(root):
-    if not root:
-        return
+    tree_sums = []
+    def dfs(node):
+        if not node:
+            return 0
+        l_sum = dfs(node.left)
+        r_sum = dfs(node.right)
+        
+        cur_sum = l_sum+r_sum+node.val
 
-    queue = deque([(root)])
-    res = 0
-    maxi = root.val
-    level=1
-    while queue:
-        curr_sum = 0
-        for _ in range(len(queue)):
-            node = queue.popleft()
-            curr_sum += node.val
-            
-            if node.left:
-                queue.append(node.left)
-            if node.right:
-                queue.append(node.right)
+        tree_sums.append(cur_sum)
 
-        if maxi < curr_sum:
-            maxi = curr_sum
-            res = level
+        return cur_sum
 
-        level += 1
+    total_sum = dfs(root)
+    max_product = 0
+    for sum_ in tree_sums:
+        max_product = max(max_product, (total_sum-sum_)*sum_)
 
-    return res
+    return max_product
+
+        
 
 
-# a = Node(1)
-# a.left = Node(7)
-# a.right = Node(0)
-# b = a.left
-# b.left = Node(7)
-# b.right = Node(-8)
-
-a = Node(-100)
-a.left = Node(-200)
-a.right = Node(-300)
+a = Node(1)
+a.left = Node(2)
+a.right = Node(3)
 b = a.left
 c = a.right
-b.left = Node(-20)
-b.right = Node(-5)
-c.left = Node(-10)
+b.left = Node(4)
+b.right = Node(5)
+c.left = Node(6)
 
 print(func(a))
