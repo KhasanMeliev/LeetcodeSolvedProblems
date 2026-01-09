@@ -192,7 +192,7 @@
 #-----------------------------------------------------------------------
 # 1458. Max Dot Product of Two Subsequences
 # def func(nums1, nums2):
-#     n,m=len(nums1), len(nums2)
+#     n,m=len(nums1), len(nums2)    
 #     dp = [[0]*(m) for _ in range(n)]
     
 #     for i in range(n):

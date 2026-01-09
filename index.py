@@ -1,19 +1,56 @@
-def func(nums1, nums2):
-    n,m=len(nums1), len(nums2)
-    dp = [[0]*(m) for _ in range(n)]
-    
-    for i in range(n):
-        for j in range(m):
-            product = nums1[i]*nums2[j]
-            dp[i][j]=product
+from collections import deque
 
-            if i>0 and j>0:
-                dp[i][j] = max(dp[i][j], dp[i-1][j-1]+product)
-            if i>0:
-                dp[i][j] = max(dp[i][j], dp[i-1][j])
-            if j>0:
-                dp[i][j] = max(dp[i][j], dp[i][j-1])
-    
-    return dp[i][j]
+class Node:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
 
-print(func([2,1,-2,5],[3,0,-6]))
+
+def func(root):
+    if not root:
+        return 
+    queue = deque([(root)])
+    last = []
+    level = 0
+    removed = []
+    while queue:
+        level+=1
+        lev = []
+        for i in range(len(queue)):
+            node = queue.popleft()
+            if not node.left and not node.right:
+                removed.append(node.val)
+
+            if node.left:
+                queue.append(node.left)
+                lev.append(node.left.val)
+            if node.right:
+                queue.append(node.right)
+                lev.append(node.right.val)
+        last.append([lev, level])
+    if len(last)<=2:
+        return root.val
+    depth = last[-3][0]
+    return depth, removed
+    for i in depth:
+        if i not in removed:
+            return i
+
+a = Node(1)
+b = Node(2)
+c = Node(3)
+d = Node(4)
+e = Node(6)
+f = Node(5)
+# g = Node(8)
+# h = Node(7)
+# i = Node(4)
+a.left = b
+b.left = c
+b.right = d
+c.right = e
+d.right=f
+
+
+print(func(a))
