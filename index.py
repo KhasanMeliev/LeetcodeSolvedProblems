@@ -8,34 +8,19 @@ class Node:
 
 
 def func(root):
-    if not root:
-        return 
-    queue = deque([(root)])
-    last = []
-    level = 0
-    removed = []
-    while queue:
-        level+=1
-        lev = []
-        for i in range(len(queue)):
-            node = queue.popleft()
-            if not node.left and not node.right:
-                removed.append(node.val)
-
-            if node.left:
-                queue.append(node.left)
-                lev.append(node.left.val)
-            if node.right:
-                queue.append(node.right)
-                lev.append(node.right.val)
-        last.append([lev, level])
-    if len(last)<=2:
-        return root.val
-    depth = last[-3][0]
-    return depth, removed
-    for i in depth:
-        if i not in removed:
-            return i
+    def dfs(node):
+        if not node:
+            return (0, None)
+        left_depth, left_lca = dfs(node.left)
+        right_depth, right_lca=dfs(node.right)
+        if left_depth>right_depth:
+            return (left_depth+1, left_lca)
+        elif right_depth>left_depth:
+            return (right_depth+1, right_lca)
+        else:
+            return (left_depth+1, node)
+        
+    return dfs(root)[1]
 
 a = Node(1)
 b = Node(2)
@@ -50,7 +35,6 @@ a.left = b
 b.left = c
 b.right = d
 c.right = e
-d.right=f
 
 
 print(func(a))
