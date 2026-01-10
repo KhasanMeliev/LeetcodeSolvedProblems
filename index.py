@@ -1,40 +1,21 @@
-from collections import deque
+def func(word1, word2):
+    m,n=len(word1), len(word2)
+    dp=[[0]*(n+1) for _ in range(m+1)]
 
-class Node:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
+    for i in range(m+1):
+        for j in range(n+1):
+            if i==0:
+                dp[i][j]=j
+            elif j==0:
+                dp[i][j] = i
+            else:
+                if word1[i-1]==word2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                    print(word1[i-1], word2[j-1])
+                else:
+                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
+                    
 
+    return dp[-1][-1]
 
-def func(root):
-    def dfs(node):
-        if not node:
-            return (0, None)
-        left_depth, left_lca = dfs(node.left)
-        right_depth, right_lca=dfs(node.right)
-        if left_depth>right_depth:
-            return (left_depth+1, left_lca)
-        elif right_depth>left_depth:
-            return (right_depth+1, right_lca)
-        else:
-            return (left_depth+1, node)
-        
-    return dfs(root)[1]
-
-a = Node(1)
-b = Node(2)
-c = Node(3)
-d = Node(4)
-e = Node(6)
-f = Node(5)
-# g = Node(8)
-# h = Node(7)
-# i = Node(4)
-a.left = b
-b.left = c
-b.right = d
-c.right = e
-
-
-print(func(a))
+print(func('sea', 'eat'))
