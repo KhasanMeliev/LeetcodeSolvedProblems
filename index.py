@@ -1,21 +1,19 @@
-def func(word1, word2):
-    m,n=len(word1), len(word2)
-    dp=[[0]*(n+1) for _ in range(m+1)]
+def func(s):
+    def helper(s, left, right):
+        while left>=0 and right<len(s)-1 and s[left]==s[right]:
+            left-=1
+            right+=1
+        return right-left-1
+    start = 0
+    end = 0
+    for i in range(len(s)):
+        odd = helper(s,i,i)
+        even = helper(s,i,i+1)
+        max_length = max(even, odd)
+        print(max_len)
+        if max_length>end-start:
+            start=i-(max_length-1)//2
+            end=i+max_length//2
+    return s[start:end+1]
 
-    for i in range(m+1):
-        for j in range(n+1):
-            if i==0:
-                dp[i][j]=j
-            elif j==0:
-                dp[i][j] = i
-            else:
-                if word1[i-1]==word2[j-1]:
-                    dp[i][j] = dp[i-1][j-1]
-                    print(word1[i-1], word2[j-1])
-                else:
-                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
-                    
-
-    return dp[-1][-1]
-
-print(func('sea', 'eat'))
+print(func('babad'))
