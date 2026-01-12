@@ -10,7 +10,7 @@ def func(s):
         odd = helper(s,i,i)
         even = helper(s,i,i+1)
         max_length = max(even, odd)
-        print(max_len)
+        print(max_length)
         if max_length>end-start:
             start=i-(max_length-1)//2
             end=i+max_length//2
