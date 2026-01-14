@@ -1,17 +1,23 @@
-def func(nums):
-    res = 0
-    for i in range(len(nums)):
-        l,r=i,i+1
-        while r<len(nums)-1:
-            if nums[r]-nums[l]==1:
-                l+=1
-                r+=1
-                print(l,r,nums[r], nums[l])
-                res+=1
+def func(s):
+    stack = []
+    curr, sign = 0, '+'
+    for c in s+'+':
+        if c==' ':
+            continue
+        elif c.isdigit():
+            curr=(curr*10)+int(c)
+        else:
+            if sign=='+':
+                stack.append(curr)
+            elif sign=='-':
+                stack.append(-curr)
+            elif sign =='*':
+                stack.append(stack.pop()*curr)
             else:
-                break
-    return res
-            
+                stack.append(stack.pop()//curr)
+                print(stack, curr)
+            curr,sign=0,c
 
+    return stack
 
-print(func([2, 3, 4, 3, 4]))
+print(func(" 3+5 / 2"))
