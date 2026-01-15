@@ -1,23 +1,25 @@
-def func(s):
-    stack = []
-    curr, sign = 0, '+'
-    for c in s+'+':
-        if c==' ':
-            continue
-        elif c.isdigit():
-            curr=(curr*10)+int(c)
-        else:
-            if sign=='+':
-                stack.append(curr)
-            elif sign=='-':
-                stack.append(-curr)
-            elif sign =='*':
-                stack.append(stack.pop()*curr)
-            else:
-                stack.append(stack.pop()//curr)
-                print(stack, curr)
-            curr,sign=0,c
+def solve():
+    n, m = map(int, input().split())
 
-    return stack
+    parent = list(range(n))
 
-print(func(" 3+5 / 2"))
+    def find(x):
+        if parent[x] != x:
+            parent[x] = find(parent[x])
+        return parent[x]
+
+    def union(x, y):
+        rx, ry = find(x), find(y)
+        if rx != ry:
+            parent[ry] = rx
+
+    for _ in range(m):
+        a, b, l = map(int, input().split())
+        a -= 1
+        b -= 1
+        for i in range(l):
+            union(a + i, b + i)
+
+    # Komponentlar soni
+    roots = set(find(i) for i in range(n))
+    print(len(roots))
