@@ -311,3 +311,25 @@
 #             res[i] = best
 
 #         return res
+
+
+# 1208. Get Equal Substrings Within Budget
+# class Solution:
+#     def equalSubstring(self, s: str, t: str, maxCost: int) -> int:
+#         n = len(s)
+#         cost = []
+#         for i in range(n):
+#             cost.append(abs(ord(s[i]) - ord(t[i])))
+
+#         left = 0
+#         curr_cost = 0
+#         res = 0
+#         for right in range(n):
+#             curr_cost += cost[right]
+#             while curr_cost > maxCost:
+#                 curr_cost -= cost[left]
+#                 left += 1
+
+#             res = max(res, right - left + 1)
+
+#         return res
