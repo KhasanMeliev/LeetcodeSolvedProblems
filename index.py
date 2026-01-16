@@ -1,25 +1,24 @@
-def solve():
-    n, m = map(int, input().split())
+def func(n,board):
+    dp = [-1] * (1 << n)
+    dp[0] = 0 
 
-    parent = list(range(n))
+    for i in range(1 << n):
+        if dp[i] == -1:
+            continue
 
-    def find(x):
-        if parent[x] != x:
-            parent[x] = find(parent[x])
-        return parent[x]
+        x = bin(i).count('1')
 
-    def union(x, y):
-        rx, ry = find(x), find(y)
-        if rx != ry:
-            parent[ry] = rx
+        for y in range(n):
+            if i & (1 << y):
+                continue  
+            update = i | (1 << y)
+            dp[update] = max(dp[update], dp[i] + board[x][y])
 
-    for _ in range(m):
-        a, b, l = map(int, input().split())
-        a -= 1
-        b -= 1
-        for i in range(l):
-            union(a + i, b + i)
+    return dp[(1 << n) - 1]  
 
-    # Komponentlar soni
-    roots = set(find(i) for i in range(n))
-    print(len(roots))
+board = []
+n=int(input())
+for _ in range(n):
+    x=[int(x) for x in input().split()]
+    board.append(x)
+print(func(n, board))
