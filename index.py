@@ -1,24 +1,39 @@
-def func(n,board):
-    dp = [-1] * (1 << n)
-    dp[0] = 0 
+def lcp(a, b):
+    i = 0
+    while i < len(a) and i < len(b) and a[i] == b[i]:
+        i += 1
+    return i
 
-    for i in range(1 << n):
-        if dp[i] == -1:
-            continue
 
-        x = bin(i).count('1')
+def func(words):
+    n = len(words)
+    lcpArr = []
+    res = [0] * n
+    for i in range(n - 1):
+        lcpArr.append(lcp(words[i], words[i + 1]))
+    pref = [0] * (n - 1)
+    pref[0] = lcpArr[0]
+    for i in range(1, n - 1):
+        pref[i] = max(pref[i - 1], lcpArr[i])
+    suf = [0] * (n - 1)
+    suf[-1] = lcpArr[-1]
+    for i in range(n - 3, -1, -1):
+        suf[i] = max(suf[i + 1], lcpArr[i])
+    
+    return pref, suf
 
-        for y in range(n):
-            if i & (1 << y):
-                continue  
-            update = i | (1 << y)
-            dp[update] = max(dp[update], dp[i] + board[x][y])
+    for i in range(n):
+        best = 0
+        if i-2 >= 0:
+            best = max(best, pref[i-2])
+        if i+1 < n-1:
+            best = max(best, suf[i+1])
+        if 0 < i < n-1:
+            best = max(best,  lcp(words[i-1], words[i+1]))
 
-    return dp[(1 << n) - 1]  
+        res[i] = best
 
-board = []
-n=int(input())
-for _ in range(n):
-    x=[int(x) for x in input().split()]
-    board.append(x)
-print(func(n, board))
+    return res
+
+
+print(func(["jump", "run", "run", "jump", "run"]))
