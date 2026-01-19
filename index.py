@@ -13,7 +13,6 @@ def func(nums,target):
             coverage+=coverage+1
             added+=1
     
-
     return added
 
 print(func([1,3],6))
