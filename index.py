@@ -1,17 +1,18 @@
-def func(s):
-    n = len(s)
-    obj = {}
-    cnt = 0
-    for i in range(0, len(s)-1, 2):
-        color = s[i]
-        pos = s[i+1]
-        if pos not in obj:
-            obj[pos] = []
-        obj[pos].append(color)
-    for i in obj.values():
-        if 'R' in i and 'G' in i and 'B' in i:
-            cnt += 1
-    return cnt
+def func(nums, k):
+    positive = []
+    for i in nums:
+        if i >= 0:
+            positive.append(i)
+    k = k % len(positive)
+    x = 0
+    for i in range(len(nums)):
+        if nums[i] >= 0:
+            nums[i] = positive[(x+k) % len(positive)]
+            x += 1
+
+    return nums
 
 
-print(func('B0B6G0R6R0R6G9'))
+print(func([3, 17, 3], 89646))
+# print(func([5, 4, -9, 6], 10))
+# print(func([1, -2, 3, -4], 3))
