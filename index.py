@@ -1,32 +1,13 @@
-from collections import deque
+def func(n):
+    f = [0]*(n+1)
+    f[0] = 1
+    f[1] = 0
+    for i in range(2, n+1):
+        f[i] = 2*f[i-2]
+    return f[n]
 
 
-class Node:
-    def __init__(self, val, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+n = int(input())
+print(func(n))
 
-
-def func(root):
-    res = []
-
-    def dfs(node,level):
-        if not node:
-            return 
-        if level==len(res):
-            res.append([])
-
-
-a = Node(3)
-b = Node(9)
-c = Node(20)
-d = Node(15)
-e = Node(7)
-
-a.left = b
-a.right = c
-c.left = d
-c.right = e
-
-print(func(a))
+print(func(4))
