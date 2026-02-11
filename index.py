@@ -1,13 +1,25 @@
-def func(n):
-    f = [0]*(n+1)
-    f[0] = 1
-    f[1] = 0
-    for i in range(2, n+1):
-        f[i] = 2*f[i-2]
-    return f[n]
+def func(grid):
+    res = 0
+    if len(grid) == 0 or grid[0][0] == 1:
+        return 0
+    rows = len(grid)
+    columns = len(grid[0])
+
+    dp = [0]*columns
+    dp[0] = 1
+
+    for r in range(rows):
+        for c in range(columns):
+            if grid[r][c] == 1:
+                dp[c] = 0
+            else:
+                if c > 0:
+                    dp[c] += dp[c-1]
+
+    return dp
+
+    for i in grid:
+        print(i)
 
 
-n = int(input())
-print(func(n))
-
-print(func(4))
+print(func([[0, 1], [0, 0]]))
