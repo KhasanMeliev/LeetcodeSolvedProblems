@@ -1,16 +1,20 @@
-def func(words, groups):
-    res = [words[0]]
-    curr = [words[0]]
-    prev = groups[0]
-    for i in range(1, len(groups)):
-        if groups[i] != prev:
-            curr.append(words[i])
-            prev = groups[i]
+def func(s):
+    if s == s[::-1]:
+        return s
+    t, n = 0, 1
+    for i in range(1, len(s)):
+        l, r = i-n, i+1
+        s1 = s[l-1:r]
+        if l >= 1 and s1 == s1[::-1]:
+            n += 2
+            t = l-1
+
         else:
-            if len(curr) > len(res):
-                res = curr
+            s2 = s[l:r]
+            if s2 == s2[::-1]:
+                n += 1
+                t = l
+    return s[t:t+n]
 
-    return res
 
-
-print(func(["a", "b", "c", 'd'], [1, 0, 0, 1]))
+print(func('babad'))
