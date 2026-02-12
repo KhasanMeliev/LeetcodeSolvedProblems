@@ -1,20 +1,24 @@
-def func(s):
-    if s == s[::-1]:
-        return s
-    t, n = 0, 1
-    for i in range(1, len(s)):
-        l, r = i-n, i+1
-        s1 = s[l-1:r]
-        if l >= 1 and s1 == s1[::-1]:
-            n += 2
-            t = l-1
+def func(s1, s2):
+    n = len(s1)
+    m = len(s2)
+    dp = [[1]*(m+1) for _ in range(n+1)]
 
-        else:
-            s2 = s[l:r]
-            if s2 == s2[::-1]:
-                n += 1
-                t = l
-    return s[t:t+n]
+    for i in range(n+1):
+        for j in range(m+1):
+            if i == 0:
+                dp[i][j] = j
+            elif j == 0:
+                dp[i][j] = i
+            else:
+                if s1[i-1] == s2[j-1]:
+                    dp[i][j] = dp[i-1][j-1]
+                else:
+                    dp[i][j] = min(dp[i-1][j-1], dp[i-1][j], dp[i][j-1])+1
+
+    for i in dp:
+        print(i)
+
+    return dp[-1][-1]
 
 
-print(func('babad'))
+print(func('horse', 'ros'))
