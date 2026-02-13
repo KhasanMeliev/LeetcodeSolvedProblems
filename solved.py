@@ -29,14 +29,14 @@
 #             d[i] = 1
 
 
-#-----------------------------------------------------
+# -----------------------------------------------------
 # 3794. Reverse String Prefix
 
 # class Solution:
 #     def reversePrefix(self, s: str, k: int) -> str:
 #         return s[:k][::-1]+s[k:]
 
-#-----------------------------------------------------
+# -----------------------------------------------------
 
 # 1390. Four Divisors
 # def func(arr):
@@ -52,16 +52,16 @@
 #                 subRes=(j+i//j)+1+i
 #             if divisor>2:
 #                 break
-            
+
 #         if divisor==2:
 #             res+=subRes
-        
+
 
 #     return res
 
 # print(func([21,4,7,16])) #32
 
-#------------------------------------------------------------------
+# ------------------------------------------------------------------
 
 # 1975. Maximum Matrix Sum
 # def func(arr):
@@ -83,7 +83,7 @@
 # print(func([[2, 9, 3], [5, 4, -4], [1, 7, 1]]))
 
 
-#---------------------------------------------------------------
+# ---------------------------------------------------------------
 
 # 1161. Maximum Level Sum of a Binary Tree
 # from collections import deque
@@ -109,7 +109,7 @@
 #         for _ in range(len(queue)):
 #             node = queue.popleft()
 #             curr_sum += node.val
-            
+
 #             if node.left:
 #                 queue.append(node.left)
 #             if node.right:
@@ -142,7 +142,7 @@
 
 # print(func(a))
 
-#-----------------------------------------------------
+# -----------------------------------------------------
 # 1339. Maximum Product of Splitted Binary Tree
 # from collections import deque
 
@@ -161,7 +161,7 @@
 #             return 0
 #         l_sum = dfs(node.left)
 #         r_sum = dfs(node.right)
-        
+
 #         cur_sum = l_sum+r_sum+node.val
 
 #         tree_sums.append(cur_sum)
@@ -175,8 +175,6 @@
 
 #     return max_product
 
-        
-
 
 # a = Node(1)
 # a.left = Node(2)
@@ -189,12 +187,12 @@
 
 # print(func(a))
 
-#-----------------------------------------------------------------------
+# -----------------------------------------------------------------------
 # 1458. Max Dot Product of Two Subsequences
 # def func(nums1, nums2):
-#     n,m=len(nums1), len(nums2)    
+#     n,m=len(nums1), len(nums2)
 #     dp = [[0]*(m) for _ in range(n)]
-    
+
 #     for i in range(n):
 #         for j in range(m):
 #             product = nums1[i]*nums2[j]
@@ -210,7 +208,7 @@
 
 # print(func([2,1,-2,5],[3,0,-6]))
 
-#------------------------------------------------
+# ------------------------------------------------
 # 865. Smallest Subtree with all the Deepest Nodes
 # from collections import deque
 
@@ -233,7 +231,7 @@
 #             return (right_depth+1, right_lca)
 #         else:
 #             return (left_depth+1, node)
-        
+
 #     return dfs(root)[1]
 
 # a = Node(1)
@@ -282,7 +280,7 @@
 #             while i < len(a) and i < len(b) and a[i] == b[i]:
 #                 i += 1
 #             return i
-        
+
 #         n = len(words)
 #         if n<=1:
 #             return [0]*n
@@ -331,5 +329,66 @@
 #                 left += 1
 
 #             res = max(res, right - left + 1)
+
+#         return res
+
+# 3714. Longest Balanced Substring II
+
+
+# class Solution:
+#     def longestBalanced(self, s: str) -> int:
+#         n = len(s)
+#         if n == 0:
+#             return 0
+
+#         res = 1
+#         length = 1
+#         for i in range(n - 1):
+#             if s[i] == s[i + 1]:
+#                 length += 1
+#             else:
+#                 res = max(res, length)
+#                 length = 1
+#         res = max(res, length)
+
+#         abc = {}
+#         ab = {}
+#         bc = {}
+#         ca = {}
+
+#         abc[(0, 0)] = -1
+#         ab[(0, 0)] = -1
+#         bc[(0, 0)] = -1
+#         ca[(0, 0)] = -1
+
+#         cnt = [0, 0, 0]
+
+#         for i, c in enumerate(s):
+#             cnt[ord(c) - ord("a")] += 1
+#             a, b, c = cnt
+
+#             key = (b - a, c - a)
+#             if key in abc:
+#                 res = max(res, i - abc[key])
+#             else:
+#                 abc[key] = i
+
+#             key = (a - b, c)
+#             if key in ab:
+#                 res = max(res, i - ab[key])
+#             else:
+#                 ab[key] = i
+
+#             key = (c - a, b)
+#             if key in ca:
+#                 res = max(res, i - ca[key])
+#             else:
+#                 ca[key] = i
+
+#             key = (b - c, a)
+#             if key in bc:
+#                 res = max(res, i - bc[key])
+#             else:
+#                 bc[key] = i
 
 #         return res

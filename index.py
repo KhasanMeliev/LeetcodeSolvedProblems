@@ -1,7 +1,5 @@
 def func(s):
     n = len(s)
-    if n == 0:
-        return 0
 
     ans = 1
     length = 1
@@ -11,13 +9,9 @@ def func(s):
         else:
             ans = max(ans, length)
             length = 1
-
     ans = max(ans, length)
 
-    ab = {}
-    bc = {}
-    ca = {}
-    abc = {}
+    abc = ab = ca = bc = {}
 
     abc[(0, 0)] = -1
     ab[(0, 0)] = -1
@@ -57,4 +51,4 @@ def func(s):
     return ans
 
 
-print(func('abbac'))
+print(func('aabcc'))
