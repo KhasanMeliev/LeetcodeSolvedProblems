@@ -1,54 +1,22 @@
-def func(s):
-    n = len(s)
+def func(prices):
+    dp = {}
 
-    ans = 1
-    length = 1
-    for i in range(n-1):
-        if s[i] == s[i+1]:
-            length += 1
+    def dfs(i, buying):
+        if i >= len(prices):
+            return 0
+        x = (i, buying)
+        if x in dp:
+            return dp[x]
+
+        cooldown = dfs(i+1, buying)
+        if buying:
+            buy = dfs(i+1, not buying)-prices[i]
+            dp[x] = max(buy, cooldown)
         else:
-            ans = max(ans, length)
-            length = 1
-    ans = max(ans, length)
-
-    abc = ab = ca = bc = {}
-
-    abc[(0, 0)] = -1
-    ab[(0, 0)] = -1
-    bc[(0, 0)] = -1
-    ca[(0, 0)] = -1
-
-    cnt = [0, 0, 0]
-
-    for i, c in enumerate(s):
-        cnt[ord(c)-ord('a')] += 1
-        a, b, c = cnt
-
-        key = (b-a, c-a)
-        if key in abc:
-            ans = max(ans, i-abc[key])
-        else:
-            abc[key] = i
-
-        key = (a-b, c)
-        if key in ab:
-            ans = max(ans, i-ab[key])
-        else:
-            ab[key] = i
-
-        key = (b-c, a)
-        if key in bc:
-            ans = max(ans, i-bc[key])
-        else:
-            bc[key] = i
-
-        key = (c-a, b)
-        if key in ca:
-            ans = max(ans, i-ca[key])
-        else:
-            ca[key] = i
-
-    return ans
+            sell = dfs(i+2, buying)+prices[i]
+            dp[x] = max(sell, cooldown)
+        return dp[x]
+    return dfs(0, True)
 
 
-print(func('aabcc'))
+print(func([1, 2, 3, 0, 2]))
