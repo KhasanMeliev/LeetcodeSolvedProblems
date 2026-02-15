@@ -1,22 +1,25 @@
-def func(prices):
-    dp = {}
+def func(points):
+    rows, cols = len(points), len(points[0])
+    row = points[0]
 
-    def dfs(i, buying):
-        if i >= len(prices):
-            return 0
-        x = (i, buying)
-        if x in dp:
-            return dp[x]
+    for r in range(1, rows):
+        next_row = points[r].copy()
+        left, right = [0]*cols, [0]*cols
 
-        cooldown = dfs(i+1, buying)
-        if buying:
-            buy = dfs(i+1, not buying)-prices[i]
-            dp[x] = max(buy, cooldown)
-        else:
-            sell = dfs(i+2, buying)+prices[i]
-            dp[x] = max(sell, cooldown)
-        return dp[x]
-    return dfs(0, True)
+        left[0] = row[0]
+        for c in range(1, cols):
+            left[c] = max(row[c], left[c-1]-1)
+
+        right[cols-1] = row[cols-1]
+        for c in range(cols-2, -1, -1):
+            right[c] = max(row[c], right[c+1]-1)
+
+        for c in range(cols):
+            next_row[c] += max(left[c], right[c])
+
+        row = next_row
+
+    return row
 
 
-print(func([1, 2, 3, 0, 2]))
+print(func([[1, 2, 3], [1, 5, 1], [3, 1, 1]]))
